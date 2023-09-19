@@ -17,6 +17,8 @@ var startbtn = document.getElementById("startbtn");
 var questions = document.getElementById("question");
 var answers = document.getElementById("answers");
 var time = document.getElementById("time");
+var highScores = document.getElementById("highScores")
+var scoreBoard = document.createElement("ul");
 var li1 = document.createElement("li");
 var li2 = document.createElement("li");
 var li3 = document.createElement("li");
@@ -46,6 +48,7 @@ function countdown() {
         if(timeLeft<=0){
           time.textContent = " "
           clearInterval(timeInterval)
+          gameOver();
       }
       }, 1000);
   }
@@ -192,12 +195,41 @@ function checkAnswer(correct){
 
 function scorePage(event){
     event.preventDefault();
-    playerValue = player.value.trim()+ " : " +score;
-    localStorage.setItem("playerScore", JSON.stringify(playerValue));
-    console.log(playerValue);
+    scoreBoard.innerHTML = "";
+    storedScore = ""
+    playerScores = [];
+    var storedScore = JSON.parse(localStorage.getItem("playerScore"));
+    console.log(storedScore);
+    console.log(player);
+    if(storedScore != "" && storedScore != null){
+    playerScores.push(storedScore);
+    };
+    if(player.value != "" && player.value != null && player.value != "enter initials"){
+        playerValue = player.value.trim()+" : "+score;
+        playerScores.push(playerValue);
+    };
+    console.log(playerScores);
+    if(playerScores != "" && playerScores != null){
+        localStorage.setItem("playerScore", JSON.stringify(playerScores));
+    };
+    question.textContent = "High Scores"
+    player.value = "";
     player.remove();
     startP.remove();
+    answers.remove();
+    root.appendChild(scoreBoard);
+    renderScore();
 }
+
+function renderScore() {  
+    for (var i = 0; i < playerScores.length; i++) {
+      var ps = playerScores[i];
+      var li = document.createElement("li");
+      li.textContent = ps;
+      li.setAttribute("data-index", i);
+      scoreBoard.appendChild(li);
+    }
+  }
 
 function gameOver(){
     li1.remove();
@@ -216,7 +248,9 @@ function startquiz(event){
     event.preventDefault();
     startbtn.remove();
     startP.remove();
+    scoreBoard.remove();
     countdown();
+    root.appendChild(answers);
     answers.appendChild(li1);
     answers.appendChild(li2);
     answers.appendChild(li3);
@@ -238,3 +272,4 @@ startbtn.addEventListener("click", startquiz);
 answers.addEventListener("click", nextquestion);
 submit.addEventListener("click", scorePage);
 submit.addEventListener("submit", scorePage);
+highScores.addEventListener("click", scorePage);
