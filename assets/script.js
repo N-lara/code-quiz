@@ -39,13 +39,14 @@ li4.value = 4;
 var Qcount = 0;
 var ansValue = 0;
 var score = 0;
+var gameOverVal = 0
 
 var timeLeft = 120;
 function countdown() {  
     var timeInterval = setInterval(function () {
         timeLeft--
         time.textContent = "time left:  " + timeLeft;
-        if(timeLeft<=0){
+        if(timeLeft<=0 || gameOverVal == 1){
           time.textContent = " "
           clearInterval(timeInterval)
           gameOver();
@@ -199,8 +200,6 @@ function scorePage(event){
     storedScore = ""
     playerScores = [];
     var storedScore = JSON.parse(localStorage.getItem("playerScore"));
-    console.log(storedScore);
-    console.log(player);
     if(storedScore != "" && storedScore != null){
     playerScores.push(storedScore);
     };
@@ -208,7 +207,6 @@ function scorePage(event){
         playerValue = player.value.trim()+" : "+score;
         playerScores.push(playerValue);
     };
-    console.log(playerScores);
     if(playerScores != "" && playerScores != null){
         localStorage.setItem("playerScore", JSON.stringify(playerScores));
     };
@@ -217,6 +215,7 @@ function scorePage(event){
     player.remove();
     startP.remove();
     answers.remove();
+    submit.remove();
     root.appendChild(scoreBoard);
     renderScore();
 }
@@ -264,7 +263,7 @@ function nextquestion(event){
     checkAnswer(correct);
     console.log(Qcount);
     verify();
-    if(Qcount==11){gameOver();}
+    if(Qcount==11){gameOverVal=1;}
 }
 
 
