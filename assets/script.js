@@ -188,7 +188,7 @@ function scorePage(event){
     playerScores = [];
     var storedScore = JSON.parse(localStorage.getItem("playerScore"));
     if(storedScore != "" && storedScore != null){
-    playerScores.push(storedScore);
+    playerScores = storedScore;
     };
     if(player.value != "" && player.value != null && player.value != "enter initials"){
         playerValue = player.value.trim()+" : "+score;
@@ -204,6 +204,8 @@ function scorePage(event){
     answers.remove();
     submit.remove();
     root.appendChild(scoreBoard);
+    root.appendChild(reset);
+    root.appendChild(home);
     renderScore();
 }
 
@@ -235,6 +237,8 @@ function startquiz(event){
     startbtn.remove();
     startP.remove();
     scoreBoard.remove();
+    reset.remove();
+    home.remove();
     countdown();
     root.appendChild(answers);
     answers.appendChild(li1);
@@ -253,9 +257,20 @@ function nextquestion(event){
     if(Qcount==11){gameOverVal=1;}
 }
 
+function localReset(event){
+    event.preventDefault();
+    localStorage.clear();
+    scoreBoard.innerHTML = "";
+}
+
+function homePage(){
+    location.reload();
+}
 
 startbtn.addEventListener("click", startquiz);
 answers.addEventListener("click", nextquestion);
 submit.addEventListener("click", scorePage);
-submit.addEventListener("submit", scorePage);
+player.addEventListener("submit", scorePage);
 highScores.addEventListener("click", scorePage);
+reset.addEventListener("click", localReset);
+home.addEventListener("click", homePage);

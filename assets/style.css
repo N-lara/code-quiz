@@ -14,3 +14,11 @@ li{
     padding: 5px;
     width: 30%;
 }
+
+#highScores{
+    color: green;
+}
+
+button{
+    margin: 10px;
+}

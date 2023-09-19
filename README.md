@@ -19,11 +19,7 @@ this project was created solely by Noah Lara
 
 ## Tests
 
-right now am still working out a bug with the scoreboard system occasionally putting multiple scores on one line in the specific circumstance of if you press the view highscores link in the upper corner when you are already on the high scores page.
-
-also i didnt quite have enough time to add this feature in but a sorting feature on the leaderboard would be cool to sort from highest to lowest score.
-
-also another bug that occasionally is presenting is my algorithem for randomizing questions is occasionally getting caught if this happens please refresh page and try again i am looking into another system for randomization to use in the future.
+a bug that occasionally is presenting is my algorithem for randomizing questions is occasionally getting caught if this happens please refresh page and try again i am looking into another system for randomization to use in the future.
 
 ## Screenshot
 
