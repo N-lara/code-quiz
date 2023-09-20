@@ -1,3 +1,4 @@
+//getting a handle on elements and creating some other elements
 var root = document.getElementById("root");
 var startP = document.getElementById("startP");
 var startbtn = document.getElementById("startbtn");
@@ -15,19 +16,20 @@ var player = document.createElement("input");
 var submit = document.createElement("button");
 var reset = document.createElement("button");
 var home = document.createElement("button");
-var playerScores = [];
-
+//giving answer choices values to compare against answer
 reset.textContent = "Reset scores";
 home.textContent = "Return to start"
 li1.value = 1;
 li2.value = 2;
 li3.value = 3;
 li4.value = 4;
+//setting variables to keep track of questions score answer clicked and if the game is over
 var Qcount = 0;
 var ansValue = 0;
 var score = 0;
 var gameOverVal = 0
-
+var playerScores = [];
+//creates countdown and when the countdown is over triggers game over
 var timeLeft = 120;
 function countdown() {  
     var timeInterval = setInterval(function () {
@@ -40,7 +42,7 @@ function countdown() {
       }
       }, 1000);
   }
-
+//list of questions with values to be used with the verify function to randomize
 function question(x){
     if(x==0){
         questions.textContent = "question1";
@@ -133,7 +135,7 @@ function question(x){
         console.log("q10");
     }
 }
-
+//selects a random value and checks it against values alreays picked then if not previouslty used gets question for the number picked
 var check = "";
 function verify(){
     var x = Math.floor(Math.random() * 10);
@@ -153,7 +155,7 @@ function verify(){
     check += x.toString();
     Qcount++;
 }
-
+//checks to see if answer chosen is correct if it is add score if not subtract time
 function checkAnswer(correct){
    root.appendChild(popup);
     if(ansValue == correct){
@@ -177,10 +179,8 @@ function checkAnswer(correct){
     popupTimer();
     console.log("score" + score);
 };
-
-
-
-
+//if there is a value in the player input save is to local storage and then gets all players in local storage and uses renderScore() to prints them to the page
+//also changes layout of page to the scoreboard page
 function scorePage(event){
     event.preventDefault();
     scoreBoard.innerHTML = "";
@@ -208,7 +208,7 @@ function scorePage(event){
     root.appendChild(home);
     renderScore();
 }
-
+//creates list items ro render the scores of previous players to the scoreBoard
 function renderScore() {  
     for (var i = 0; i < playerScores.length; i++) {
       var ps = playerScores[i];
@@ -218,7 +218,7 @@ function renderScore() {
       scoreBoard.appendChild(li);
     }
   }
-
+//changes the screen to the game over screen and prompts for user to enter initials to save score
 function gameOver(){
     li1.remove();
     li2.remove();
@@ -231,7 +231,7 @@ function gameOver(){
     submit.textContent = "submit";
     root.append(submit);
 };
-
+//changes screen to present questions and starts countdown
 function startquiz(event){
     event.preventDefault();
     startbtn.remove();
@@ -247,7 +247,7 @@ function startquiz(event){
     answers.appendChild(li4);
     verify();
 };
-
+//determines what answer was selected and checks if it is correct and if there is more questions left if there is not ittriggers game over
 function nextquestion(event){
     event.preventDefault();
     correct = event.target.value;
@@ -256,17 +256,17 @@ function nextquestion(event){
     verify();
     if(Qcount==11){gameOverVal=1;}
 }
-
+//wires reset button to reset scoreboard
 function localReset(event){
     event.preventDefault();
     localStorage.clear();
     scoreBoard.innerHTML = "";
 }
-
+//wires home button to reload page to get back to the start
 function homePage(){
     location.reload();
 }
-
+//event listeners to check for buttons being clicked
 startbtn.addEventListener("click", startquiz);
 answers.addEventListener("click", nextquestion);
 submit.addEventListener("click", scorePage);
